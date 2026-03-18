@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "node": "25.8.0",
+    "tsc": "^2.0.4",
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "v": "node index.ts",
+    "t": "node -v"
+  }
+}
