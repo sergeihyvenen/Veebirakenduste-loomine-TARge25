@@ -6,6 +6,7 @@
   },
   "scripts": {
     "v": "node index.ts",
-    "t": "node -v"
+    "t": "node -v",
+    "f": "node"
   }
 }
