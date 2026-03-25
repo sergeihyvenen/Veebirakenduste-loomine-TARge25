@@ -30,6 +30,7 @@ function App() {
 
   //nüüd muudame h1 all olevat teksti värvi, mis on DOM-i element. See on
   //nagu veebilehe peamine pealkiri, mis kuvatakse lehe sisu sees.
+  // ära kasuta querySelector Reacti juures ja pigem if kontrolli
   //document.querySelector("h1")!.textContent = "DOM-i peamine pealkiri on muudetud!";
 
   //Nüüd sisestame uue muutuja nimega useranme
