@@ -1,15 +1,29 @@
+export default function ItemList({ items, onDelete, onUpdate }: any) {
+  return (
+    <ul>
+      {items.map((i: any) => (
+        <li key={i.id}>
+          {i.name}
 
+          <button
+            onClick={() => {
+              console.log("CLICK EDIT");
 
+              const newName = prompt("New name:", i.name);
 
-export default function ItemList({ items, onDelete}: any) {
-    return (
-        <ul>
-            {items.map((i: any) => (
-                <li key={i.id}>
-                    {i.name}
-                    <button onClick={() => onDelete(i.id)}>X</button>
-                </li>
-            ))}
-        </ul>
-    );
+              console.log("PROMPT RESULT:", newName);
+
+              if (newName !== null) {
+                onUpdate(i.id, newName);
+              }
+            }}
+          >
+            Edit
+          </button>
+
+          <button onClick={() => onDelete(i.id)}>X</button>
+        </li>
+      ))}
+    </ul>
+  );
 }

@@ -16,4 +16,7 @@ export const removeItem = async (req: Request, res: Response) => {
     res.sendStatus(200);
 }
 
-
+export const updateItem = async (req: Request, res: Response) => {
+  await service.updateItem(Number(req.params.id), req.body.name);
+  res.sendStatus(200);
+};
