@@ -6,13 +6,13 @@ import ItemForm from "./components/ItemForm";
 
 export default function App() {
   const [items, setItems] = useState<any[]>([]);
-
+//Siin React võtab andmed backendist ja salvestab need state'i, et kuvada UI-s.
 const load = async () => {
   const res = await api.fetchItems();
   console.log("LOADED:", res.data);
   setItems([...res.data]);
 };
-
+//See käivitab andmete laadimise automaatselt, kui leht avaneb.
   useEffect(() => {
     load();
   }, []);
@@ -36,6 +36,7 @@ const load = async () => {
         }}
         onUpdate={async (id: number, name: string) => {
         console.log("UPDATE:", id, name);
+        //Pärast muutmist laeme andmed uuesti, et UI oleks ajakohane.
         await api.updateItem(id, name);
         await load();
         }}

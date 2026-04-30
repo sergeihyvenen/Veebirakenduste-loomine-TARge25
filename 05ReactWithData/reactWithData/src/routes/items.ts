@@ -7,6 +7,7 @@ const router = Router();
 
 router.get("/", controller.getItems);
 router.post("/", controller.createItem);
+//See route võtab vastu PUT päringu ja suunab selle controllerisse.
 router.put("/:id", controller.updateItem);
 router.delete("/:id", controller.removeItem);
 

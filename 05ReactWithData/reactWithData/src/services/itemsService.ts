@@ -28,5 +28,6 @@ export const updateItem = async (id: number, name: string) => {
     .request()
     .input("id", sql.Int, id)
     .input("name", sql.NVarChar, name)
+    //Siin tehakse SQL UPDATE päring, mis muudab andmebaasis kirje nime.
     .query("UPDATE Items SET name = @name WHERE id = @id");
 };

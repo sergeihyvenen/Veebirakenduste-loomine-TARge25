@@ -15,7 +15,7 @@ export const removeItem = async (req: Request, res: Response) => {
     await service.deleteItem(Number(req.params.id));
     res.sendStatus(200);
 }
-
+//Siin me võtame id URL-ist ja name request body-st ning saadame need service'i.
 export const updateItem = async (req: Request, res: Response) => {
   await service.updateItem(Number(req.params.id), req.body.name);
   res.sendStatus(200);

@@ -8,7 +8,7 @@ export default function ItemList({ items, onDelete, onUpdate }: any) {
           <button
             onClick={() => {
               console.log("CLICK EDIT");
-
+              //Kasutaja sisestab uue nime ja see saadetakse update funktsioonile.
               const newName = prompt("New name:", i.name);
 
               console.log("PROMPT RESULT:", newName);
