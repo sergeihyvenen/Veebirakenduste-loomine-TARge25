@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 type FormState = {
     id: string;
     name: string;
@@ -9,6 +9,7 @@ type FormState = {
 };
 
 export default function PlanetsCreate() {
+    const navigate = useNavigate();
     const [form, setForm] = useState<FormState>({
         id: "",
         name: "",
@@ -24,6 +25,7 @@ export default function PlanetsCreate() {
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         const { name, value } = e.target;
+
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
@@ -41,7 +43,7 @@ export default function PlanetsCreate() {
                 mass: form.mass ? Number(form.mass) : null
             };
 
-            const res = await fetch("/api/planets", {
+            const res = await fetch("http://localhost:5092/api/planets", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
@@ -54,13 +56,7 @@ export default function PlanetsCreate() {
             const result = await res.json();
             console.log("Planet created:", result);
 
-            setForm({
-                id: "",
-                name: "",
-                description: "",
-                type: "",
-                mass: ""
-            });
+            navigate("/planets");
 
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : "Error creating planet");
@@ -70,42 +66,70 @@ export default function PlanetsCreate() {
     };
 
     return (
-        <form onSubmit={onSubmit}>
+        <div className="page-card">
             <h1>Create Planet</h1>
 
-            {error && <p>{error}</p>}
+            {error && <p style={{ color: "crimson" }}>{error}</p>}
 
-            <input
-                name="name"
-                placeholder="Name"
-                value={form.name}
-                onChange={onChange}
-            />
+            <form
+                onSubmit={onSubmit}
+                style={{ display: "grid", gap: 12, maxWidth: 520 }}
+            >
+                <div>
+                    <label>Name</label>
+                    <input
+                        name="name"
+                        value={form.name}
+                        onChange={onChange}
+                        required
+                        style={{ width: "100%", padding: 8 }}
+                    />
+                </div>
 
-            <input
-                name="description"
-                placeholder="Description"
-                value={form.description}
-                onChange={onChange}
-            />
+                <div>
+                    <label>Description</label>
+                    <textarea
+                        name="description"
+                        value={form.description}
+                        onChange={onChange}
+                        style={{ width: "100%", padding: 8 }}
+                    />
+                </div>
 
-            <input
-                name="type"
-                placeholder="Type"
-                value={form.type}
-                onChange={onChange}
-            />
+                <div>
+                    <label>Type</label>
+                    <input
+                        name="type"
+                        value={form.type}
+                        onChange={onChange}
+                        style={{ width: "100%", padding: 8 }}
+                    />
+                </div>
 
-            <input
-                name="mass"
-                placeholder="Mass"
-                value={form.mass}
-                onChange={onChange}
-            />
+                <div>
+                    <label>Mass</label>
+                    <input
+                        name="mass"
+                        value={form.mass}
+                        onChange={onChange}
+                        style={{ width: "100%", padding: 8 }}
+                    />
+                </div>
 
-            <button type="submit" disabled={saving}>
-                {saving ? "Saving..." : "Create"}
-            </button>
-        </form>
+                <div style={{ display: "flex", gap: 10 }}>
+                    <button className="primary" type="submit" disabled={saving}>
+                        {saving ? "Creating..." : "Create Planet"}
+                    </button>
+
+                    <button
+                        className="secondary"
+                        type="button"
+                        onClick={() => navigate("/planets")}
+                    >
+                        Back
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 }

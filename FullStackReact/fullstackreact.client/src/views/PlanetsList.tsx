@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from "react";
 import type { Planets } from "../types/planets";
 import { useNavigate } from "react-router-dom";
@@ -8,23 +9,20 @@ function PlanetsList() {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
 
+    //loob ühenduse controlleriga, mille nimi on PlanetsController
     const fetchPlanets = useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
 
             const response = await fetch("/api/planets");
-
             if (response.ok) {
                 const data = await response.json();
                 setPlanets(data);
-            } else {
-                setError("Failed to load planets");
             }
-
         } catch (error) {
             console.error("Fetch error: ", error);
-            setError("Fetch error");
+            setError(error.message || "Failed to fetch planets");
         } finally {
             setLoading(false);
         }
@@ -32,9 +30,10 @@ function PlanetsList() {
 
     const openCreate = () => {
         navigate("/planets/create");
-    };
+    }
 
     useEffect(() => {
+
         (async () => {
             await fetchPlanets();
         })();
@@ -42,48 +41,33 @@ function PlanetsList() {
 
     return (
         <div className="page-card">
-
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center"
-                }}
-            >
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+            }}>
                 <h1 style={{ margin: 0 }}>Planets List</h1>
-
-                <button
-                    type="button"
-                    className="success"
-                    onClick={openCreate}
-                >
+                <button type="button" className="success" onClick={openCreate}>
                     + Create
                 </button>
             </div>
 
-            {loading && <p>Loading...</p>}
-
-            {error && <p>{error}</p>}
-
             {!loading && !error && (
-                <table
-                    border={1}
-                    cellPadding={8}
-                    style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        marginTop: 16
-                    }}
-                >
+                <table border={1} cellPadding={8} style={{
+                    width: "100%",
+                    borderCollapse: "collapse",
+                    marginTop: 16
+                }}>
                     <thead>
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
+                            <th>Description</th>
                             <th>Types</th>
                             <th>Mass</th>
+                            <th style={{ width: 220 }}>Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         {planets.length > 0 ? (
                             planets.map((planet) => (
@@ -94,7 +78,7 @@ function PlanetsList() {
                                     <td>{planet.type}</td>
                                     <td>{planet.mass}</td>
                                     <td>
-                                    siia teha nuppud edit, details ja delete
+                                        siia teha nupud edit, details ja delete
                                     </td>
                                 </tr>
                             ))
@@ -108,6 +92,6 @@ function PlanetsList() {
             )}
         </div>
     );
-}
+};
 
 export default PlanetsList;
