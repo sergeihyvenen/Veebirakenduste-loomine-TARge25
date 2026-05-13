@@ -100,7 +100,7 @@ function PlanetsList() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={4}>No planets found</td>
+                                <td>Loading planets or data not found...</td>
                             </tr>
                         )}
                     </tbody>
