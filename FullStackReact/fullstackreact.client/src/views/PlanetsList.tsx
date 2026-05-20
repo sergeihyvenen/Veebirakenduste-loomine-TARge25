@@ -1,5 +1,5 @@
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Planets } from "../types/planets";
 import { useNavigate } from "react-router-dom";
 
@@ -7,37 +7,40 @@ function PlanetsList() {
     const [planets, setPlanets] = useState<Planets[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
     const navigate = useNavigate();
 
     //loob ühenduse controlleriga, mille nimi on PlanetsController
-    const fetchPlanets = useCallback(async () => {
-        try {
-            setLoading(true);
-            setError(null);
+    useEffect(() => {
+        const fetchPlanets = async () => {
+            try {
+                setLoading(true);
+                setError(null);
 
-            const response = await fetch("/api/planets");
-            if (response.ok) {
-                const data = await response.json();
-                setPlanets(data);
+                const response = await fetch("/api/Planets");
+                if (response.ok) {
+                    const data = await response.json();
+                    setPlanets(data);
+                }
+            } catch (error) {
+                const message = error instanceof Error ? error.message : "Failed to load planets";
+                setError(message);
+            } finally {
+                setLoading(false);
             }
-        } catch (error) {
-            console.error("Fetch error: ", error);
-            setError(error.message || "Failed to fetch planets");
-        } finally {
-            setLoading(false);
-        }
+        };
+
+        fetchPlanets();
     }, []);
+
+    const openDetail = (planetsId: string) => {
+        navigate(`/planets/$(planetsId)`);
+    }
 
     const openCreate = () => {
         navigate("/planets/create");
     }
 
-    useEffect(() => {
-
-        (async () => {
-            await fetchPlanets();
-        })();
-    }, [fetchPlanets]);
 
     return (
         <div className="page-card">
@@ -78,6 +81,15 @@ function PlanetsList() {
                                     <td>{planet.type}</td>
                                     <td>{planet.mass}</td>
                                     <td>
+                                        <div style = {{ display: "flex", gap: 8 }}>
+                                            <button
+                                                type="button"
+                                                className="primary"
+                                                onClick={() => openDetail(planet.planetsId)} 
+                                            >
+                                                Details
+                                            </button>
+                                        </div>
                                         siia teha nupud edit, details ja delete
                                     </td>
                                 </tr>

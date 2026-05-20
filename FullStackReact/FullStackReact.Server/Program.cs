@@ -12,13 +12,13 @@ namespace FullStackReact.Server
 
             // Add services to the container.
 
-            //see tehakse selleks, et saaks ühendust appsettings.json classis oleva infoga
-            builder.Services.AddDbContext<PlanetContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            //see tehakse selleks, et saaks ühendust appsettings.json classis oleva infoga
+            builder.Services.AddDbContext<PlanetContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
