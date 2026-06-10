@@ -1,0 +1,56 @@
+/* Menu.css */
+.wrapper {
+    --angle: 0deg;
+    position: relative;
+    width: 500px;
+    height: 250px;
+    /*border: 2px solid #dc042c;*/
+    border-image: linear-gradient(var(--angle), #dc042c 100%) 1;
+    border-width: 2px;
+    border-style: solid;
+    /*border-radius: 10px;*/
+    margin: 50px auto;
+    margin-top: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 0 10px #abbfc0;
+    animation: 10s rotate linear infinite
+}
+
+.start {
+    margin: 100px;
+    background: #1e1e1e;
+    color: white;
+    border-radius: 7px;
+    border: 0px;
+    padding: 10px;
+    font-size: 1.2em;
+    box-shadow: 0 0 70px #abbfc0;
+    min-width: 10rem;
+    transition: box-shadow 0.2s, background-color 0.3s, color 0.3s cubic-bezier(.21, .22, .77, .59);
+    font-family: "Courier New", Courier, monospace;
+}
+
+.start:hover
+{
+    background-color: #f57d7d;
+    color: black;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 70px #f57d7d;
+}
+
+
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes rotate
+{
+    to {
+        --angle: 360deg
+    }    
+}
