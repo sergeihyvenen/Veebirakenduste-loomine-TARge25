@@ -10,7 +10,7 @@
     width: 500px;
     height: 250px;
     /*border: 2px solid #dc042c;*/
-		border: 2px solid transparent;
+		border: 3px solid transparent;
     border-radius: 10px;
 		background:
 					linear-gradient(var(--background-color), var(--background-color)) padding-box,
@@ -27,6 +27,7 @@
     flex-wrap: wrap;
     justify-content: center;
     box-shadow: 0 0 10px var(--box-white);
+		transition: background 0.2s ease-in-out;
 }
 
 .start {
