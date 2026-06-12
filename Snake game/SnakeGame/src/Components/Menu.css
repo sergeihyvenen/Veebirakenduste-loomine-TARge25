@@ -1,32 +1,44 @@
 /* Menu.css */
+:root
+{
+	--background-color: #1E1E1E;
+	--border-red: #F57D7D;
+	--box-white: #ABBFC0;
+}
 .wrapper {
-    --angle: 0deg;
     position: relative;
     width: 500px;
     height: 250px;
     /*border: 2px solid #dc042c;*/
-    border-image: linear-gradient(var(--angle), #dc042c 100%) 1;
-    border-width: 2px;
-    border-style: solid;
-    /*border-radius: 10px;*/
+		border: 3px solid transparent;
+    border-radius: 10px;
+		background:
+					linear-gradient(var(--background-color), var(--background-color)) padding-box,
+					conic-gradient(
+						from var(--angle),
+						var(--border-red),
+						var(--box-white) var(--white-amount),
+						var(--box-white) calc(100% - var(--white-amount)),
+						var(--border-red)
+						) border-box;
     margin: 50px auto;
     margin-top: 200px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    box-shadow: 0 0 10px #abbfc0;
-    animation: 10s rotate linear infinite
+    box-shadow: 0 0 10px var(--box-white);
+		transition: background 0.2s ease-in-out;
 }
 
 .start {
     margin: 100px;
-    background: #1e1e1e;
+    background: var(--background-color);
     color: white;
     border-radius: 7px;
     border: 0px;
     padding: 10px;
     font-size: 1.2em;
-    box-shadow: 0 0 70px #abbfc0;
+    box-shadow: 0 0 70px var(--box-white);
     min-width: 10rem;
     transition: box-shadow 0.2s, background-color 0.3s, color 0.3s cubic-bezier(.21, .22, .77, .59);
     font-family: "Courier New", Courier, monospace;
@@ -34,11 +46,11 @@
 
 .start:hover
 {
-    background-color: #f57d7d;
+    background-color: var(--border-red);
     color: black;
     cursor: pointer;
     font-weight: bold;
-    box-shadow: 0 0 70px #f57d7d;
+    box-shadow: 0 0 70px var(--border-red);
 }
 
 
@@ -48,9 +60,21 @@
     inherits: false;
 }
 
-@keyframes rotate
+@property --white-amount {
+		syntax: '<percentage>';
+		initial-value: 0%;
+		inherits: false;
+}
+
+.wrapper:has(.start:hover)
 {
-    to {
-        --angle: 360deg
-    }    
+	--white-amount: 50%;
+	animation: spinBorder 2.5s linear infinite;
+}
+
+@keyframes spinBorder
+{
+	to {
+		--angle: 360deg;
+	}
 }
